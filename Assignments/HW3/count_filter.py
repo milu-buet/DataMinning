@@ -1,0 +1,42 @@
+import random
+
+class CountTriple:
+	def __init__(self, m):
+		self.m = m
+		self.Table = [0]*m
+		self.a = random.randint(2,1000)
+		self.b = random.randint(2,1000)
+		self.c = random.randint(2,1000)
+		self.Table2 = [False]*m
+
+	def hash(self, triple):
+
+		if len(triple) == 2:
+			return (triple[0]*self.a + triple[1]*self.b) % self.m
+
+		return (triple[0]*self.a + triple[1]*self.b + triple[2]*self.c) % self.m
+
+	def add(self, triple):
+		i = self.hash(triple)
+		# print("count value at index", i)
+		self.Table[i] += 1
+
+	def is_candidate(self, triple, t):
+		i = self.hash(triple)
+		return self.Table[i] > t
+
+	def compact(self, t):
+		for i in range(len(self.Table2)):
+			if self.Table[i] > t:
+				self.Table2[i] = True
+
+	def print(self):
+		print("Count filter: ", self.m, self.a, self.b, self.c)
+		for i in range(len(self.Table)):
+			print(i, self.Table[i])
+
+if __name__ == '__main__':
+	c = CountTriple(21)
+	print(c.m, c.a, c.b, c.c)
+	c.add((3,10))
+	print(c.Table)

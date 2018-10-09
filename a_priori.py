@@ -3,6 +3,8 @@
 DATA_FILE = 'datasets/retail.txt'
 import count_filter
 
+
+
 #-------------------------------------------------------------
 def get_baskets(filename):
 	baskets = []
