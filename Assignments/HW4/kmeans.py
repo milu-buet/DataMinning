@@ -1,28 +1,10 @@
+# Md Lutfar Rahman
+# mrahman9@memphis.edu
+# DataMining Assingment 4
+
 import random
 import math
-
-#-----------------------------------------------------------
-class Point:
-	Columns = []
-
-	@classmethod
-	def set_features(cls, *columns):
-		Point.Columns = columns
-
-
-	def __init__(self, row):
-		self.row = row
-
-
-	def RMS(self, y):
-		s = 0
-		for c in Point.Columns:
-			s += (self.row[c] - y.row[c])**2
-		return math.sqrt(s)
-
-
-	def __str__(self):
-		return str(self.row)
+from Point import Point
 
 #-----------------------------------------------------------
 class Cluster:
@@ -106,6 +88,36 @@ class KMeans:
 	def show(self):
 		for c in self.clusters:
 			c.show()
+
+
+	def getIntraCentriodDensity(self):
+		
+		print("ClusterID","#Points","AverageDist")
+		for i,cluster in enumerate(self.clusters):
+			dist = 0.0
+			for point in cluster.points:
+				dist += point.RMS(cluster.centroid)
+				dist = round(dist,3)
+			
+			avg_dist = dist/len(cluster.points)
+			avg_dist = round(avg_dist,3)
+
+			print(i,len(cluster.points),avg_dist)
+
+	def getInterCentroidDensity(self):
+		all_dist = 0.0
+		for i in range(len(self.clusters)):
+			for j in range(i+1, len(self.clusters)):
+				dist = self.clusters[i].centroid.RMS(self.clusters[j].centroid)
+				dist = round(dist,3)
+				all_dist += dist
+				print('Distance between cluster',i,'and',j,'=',dist)
+
+		n = len(self.clusters)-1
+		n = n*(n+1)/2.0
+		print('Avg inter cluster distance=',all_dist/n)
+
+
 
 #-----------------------------------------------------------
 

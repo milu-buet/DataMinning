@@ -27,31 +27,30 @@ def silhouette(points, clusters):
 	return sum(s)/len(s)
 
 #-----------------------------------------------------------
-def get_iris_data():
-	file_name = 'datasets/iris.csv'
+def get_s1():
+	file_name = 'datasets/s1.txt'
 	with open(file_name) as f:
-		header = f.readline()
+		#header = f.readline()
 		points = []
 		for line in f:
-			items = line.strip().split(',')
+			items = line.strip().split('    ')
 			r = [
 				float(items[0]),
 				float(items[1]),
-				float(items[2]),
-				float(items[3]),
-				items[4]
 			]
 			points.append( Point(r) )
-	random.shuffle(points)
+	#random.shuffle(points)
 	return points
 
 #-----------------------------------------------------------
 
-points = get_iris_data()
-Point.set_features(0,1,2,3)
-for k in range(2, 10):
-	model = KMeans(points, k, 0.01)
+points = get_s1()
+#print(points)
+Point.set_features(0,1)
+for k in range(3, 4):
+	model = KMeans(points, 15, 0.01)
 	model.cluster()
 	# model.show()
+	print("Done")
 	print('k = ', k, 'silhouette = ', silhouette(model.points, model.clusters))
 
